@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Caveat:wght@600;700&display=swap');
+
+@import "tailwindcss";
+
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-handwritten: 'Caveat', cursive;
+
+  --color-brand-bg-1: #F7F5F2;
+  --color-brand-bg-2: #FCFAF8;
+  --color-brand-bg-3: #F4F1EE;
+
+  --color-brand-lavender: #A78BFA;
+  --color-brand-blue: #7DD3FC;
+  --color-brand-peach: #FFD8BE;
+  --color-brand-beige: #E7DDD5;
+
+  --color-brand-dark: #111111;
+  --color-brand-gray: #6B7280;
+}
+
+/* Standard resets */
+body {
+  font-family: var(--font-sans);
+  background-color: #F7F5F2;
+  color: #111111;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium micro-interactions */
+.glass {
+  background: rgba(252, 250, 248, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.glass-dark {
+  background: rgba(17, 17, 17, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-lavender {
+  background: rgba(167, 139, 250, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 139, 250, 0.15);
+}
+
+.shadow-premium {
+  box-shadow: 
+    0 10px 30px -10px rgba(17, 17, 17, 0.03), 
+    0 20px 40px -15px rgba(142, 127, 109, 0.06);
+}
+
+.shadow-premium-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.shadow-premium-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 30px 60px -20px rgba(167, 139, 250, 0.12), 
+    0 12px 24px -10px rgba(17, 17, 17, 0.03);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F1EE;
+}
+::-webkit-scrollbar-thumb {
+  background: #E7DDD5;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A78BFA;
+}
+
+/* Animation utilities */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes float-reverse {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(12px) rotate(-1.5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes drawStroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float 9s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 7s ease-in-out infinite;
+}
+
+/* Metallic Shine Sweep Effect */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+.shine-sweep:hover::after {
+  left: 150%;
+  transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dynamic ambient glow mesh */
+.bg-mesh-glow {
+  background-image: 
+    radial-gradient(at 5% 5%, rgba(167, 139, 250, 0.12) 0px, transparent 40%),
+    radial-gradient(at 95% 5%, rgba(125, 211, 252, 0.12) 0px, transparent 40%),
+    radial-gradient(at 50% 95%, rgba(255, 216, 190, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 40%, rgba(231, 221, 213, 0.1) 0px, transparent 60%);
+}
+
+/* Clean App-like Layout Wrapper */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Handwritten SVG drawing path */
+.path-draw {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: drawStroke 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 1.2s;
+}
