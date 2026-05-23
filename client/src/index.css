@@ -7,7 +7,7 @@
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-handwritten: 'Caveat', cursive;
 
-  --color-brand-bg-1: #F7F5F2;
+  --color-brand-bg-1: #EEF2F8;
   --color-brand-bg-2: #FCFAF8;
   --color-brand-bg-3: #F4F1EE;
 
@@ -20,19 +20,41 @@
   --color-brand-gray: #6B7280;
 }
 
-/* Standard resets */
+/* ===================================================
+   GLOBAL RESETS — Critical for mobile responsiveness
+   =================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 body {
   font-family: var(--font-sans);
-  background-color: #F7F5F2;
+  background-color: #EEF2F8;
   color: #111111;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
 }
 
-/* Premium micro-interactions */
+/* Prevent any child from causing horizontal scroll */
+img, video, canvas, svg {
+  max-width: 100%;
+}
+
+/* ============================
+   Glassmorphism utilities
+   ============================ */
 .glass {
   background: rgba(252, 250, 248, 0.6);
   backdrop-filter: blur(24px);
@@ -54,9 +76,12 @@ body {
   border: 1px solid rgba(167, 139, 250, 0.15);
 }
 
+/* ============================
+   Premium shadows
+   ============================ */
 .shadow-premium {
-  box-shadow: 
-    0 10px 30px -10px rgba(17, 17, 17, 0.03), 
+  box-shadow:
+    0 10px 30px -10px rgba(17, 17, 17, 0.03),
     0 20px 40px -15px rgba(142, 127, 109, 0.06);
 }
 
@@ -65,12 +90,14 @@ body {
 }
 .shadow-premium-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 
-    0 30px 60px -20px rgba(167, 139, 250, 0.12), 
+  box-shadow:
+    0 30px 60px -20px rgba(167, 139, 250, 0.12),
     0 12px 24px -10px rgba(17, 17, 17, 0.03);
 }
 
-/* Custom Scrollbar */
+/* ============================
+   Custom Scrollbar
+   ============================ */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -86,7 +113,9 @@ body {
   background: #A78BFA;
 }
 
-/* Animation utilities */
+/* ============================
+   Animation utilities
+   ============================ */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -117,7 +146,9 @@ body {
   animation: float-reverse 7s ease-in-out infinite;
 }
 
-/* Metallic Shine Sweep Effect */
+/* ============================
+   Metallic Shine Sweep Effect
+   ============================ */
 .shine-sweep {
   position: relative;
   overflow: hidden;
@@ -143,26 +174,46 @@ body {
   transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dynamic ambient glow mesh */
+/* ============================
+   Dynamic ambient glow mesh
+   ============================ */
 .bg-mesh-glow {
-  background-image: 
+  background-image:
     radial-gradient(at 5% 5%, rgba(167, 139, 250, 0.12) 0px, transparent 40%),
     radial-gradient(at 95% 5%, rgba(125, 211, 252, 0.12) 0px, transparent 40%),
     radial-gradient(at 50% 95%, rgba(255, 216, 190, 0.08) 0px, transparent 50%),
     radial-gradient(at 50% 40%, rgba(231, 221, 213, 0.1) 0px, transparent 60%);
 }
 
-/* Clean App-like Layout Wrapper */
+/* ============================
+   Clean App-like Layout Wrapper
+   ============================ */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  width: 100%;
 }
 
-/* Handwritten SVG drawing path */
+/* ============================
+   Handwritten SVG drawing path
+   ============================ */
 .path-draw {
   stroke-dasharray: 400;
   stroke-dashoffset: 400;
   animation: drawStroke 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: 1.2s;
+}
+
+/* ============================
+   Hide horizontal scrollbar on 
+   swipeable carousels 
+   ============================ */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

@@ -4,7 +4,6 @@ import { MapPin, Calendar, Users, Car, Search, ArrowRightLeft, Sparkles, UserChe
 
 export default function PlannerCard({ tripDetails, onTripDetailsChange, onSearch }) {
   const [activeTab, setActiveTab] = useState(tripDetails.tripType || 'One Way');
-  const [passengerDropdownOpen, setPassengerDropdownOpen] = useState(false);
 
   // Popular locations list for ease of demo selection
   const locations = ['Bhopal, MP', 'Ujjain, MP', 'Indore, MP', 'Jabalpur, MP', 'Gwalior, MP'];
@@ -28,12 +27,12 @@ export default function PlannerCard({ tripDetails, onTripDetailsChange, onSearch
       id="planner"
       initial={{ y: 40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.2, duration: 1, cubicBezier: [0.16, 1, 0.3, 1] }}
-      className="relative z-20 max-w-[1300px] mx-auto px-6 lg:px-12 -mt-16 md:-mt-24 mb-16"
+      transition={{ delay: 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      className="relative z-20 w-full max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-12 -mt-12 sm:-mt-16 md:-mt-24 mb-10 md:mb-16"
     >
       {/* Central Glass Card */}
-      <div className="glass rounded-[28px] p-4 md:p-5 shadow-premium border border-white/60">
-        
+      <div className="glass rounded-[20px] sm:rounded-[28px] p-4 sm:p-5 shadow-premium border border-white/60">
+
         {/* Planner Header Navigation Tabs */}
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-brand-beige/30">
           <div className="flex items-center gap-1 p-0.5 bg-brand-bg-3/70 rounded-xl border border-white/40">
@@ -44,7 +43,7 @@ export default function PlannerCard({ tripDetails, onTripDetailsChange, onSearch
                   key={tab}
                   type="button"
                   onClick={() => handleTabChange(tab)}
-                  className={`relative px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-300 ${
+                  className={`relative px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-300 ${
                     isSelected ? 'text-brand-dark' : 'text-brand-gray hover:text-brand-dark'
                   }`}
                 >
@@ -67,152 +66,158 @@ export default function PlannerCard({ tripDetails, onTripDetailsChange, onSearch
           </span>
         </div>
 
-        {/* Inputs Layout Form Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3.5 items-center">
-          
-          {/* Pickup location */}
-          <div className="lg:col-span-3 text-left relative">
-            <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
-              From (Pickup)
-            </label>
-            <div className="relative group">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender">
-                <MapPin className="w-4 h-4" />
+        {/* Inputs Layout - Responsive stacking */}
+        <div className="flex flex-col gap-3">
+
+          {/* Row 1: From / Swap / To */}
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-2 sm:gap-3 items-end">
+            {/* Pickup location */}
+            <div className="text-left">
+              <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
+                From (Pickup)
+              </label>
+              <div className="relative group">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender pointer-events-none">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <select
+                  value={tripDetails.pickup}
+                  onChange={(e) => onTripDetailsChange({ ...tripDetails, pickup: e.target.value })}
+                  className="w-full pl-9 pr-3 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm appearance-none"
+                >
+                  {locations.map((loc) => (
+                    <option key={loc} value={loc}>{loc}</option>
+                  ))}
+                </select>
               </div>
-              <select
-                value={tripDetails.pickup}
-                onChange={(e) => onTripDetailsChange({ ...tripDetails, pickup: e.target.value })}
-                className="w-full pl-9 pr-3 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm group-hover:shadow-md appearance-none"
+            </div>
+
+            {/* Swap arrows button */}
+            <div className="flex justify-center items-end pb-1">
+              <motion.button
+                whileHover={{ rotate: 180, scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSwapLocations}
+                type="button"
+                className="w-8 h-8 rounded-full bg-white shadow-md border border-brand-beige/55 flex items-center justify-center text-brand-gray hover:text-brand-lavender hover:border-brand-lavender/40 transition-all cursor-pointer"
               >
-                {locations.map((loc) => (
-                  <option key={loc} value={loc}>{loc}</option>
-                ))}
-              </select>
+                <ArrowRightLeft className="w-3.5 h-3.5" />
+              </motion.button>
+            </div>
+
+            {/* Destination location */}
+            <div className="text-left">
+              <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
+                To (Destination)
+              </label>
+              <div className="relative group">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender pointer-events-none">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <select
+                  value={tripDetails.destination}
+                  onChange={(e) => onTripDetailsChange({ ...tripDetails, destination: e.target.value })}
+                  className="w-full pl-9 pr-3 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm appearance-none"
+                >
+                  {locations.map((loc) => (
+                    <option key={loc} value={loc}>{loc}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Swap arrows button spacer */}
-          <div className="hidden lg:flex lg:col-span-1 justify-center pt-4">
-            <motion.button
-              whileHover={{ rotate: 180, scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSwapLocations}
-              type="button"
-              className="w-8 h-8 rounded-full bg-white shadow-md border border-brand-beige/55 flex items-center justify-center text-brand-gray hover:text-brand-lavender hover:border-brand-lavender/40 transition-all cursor-pointer"
-            >
-              <ArrowRightLeft className="w-3.5 h-3.5" />
-            </motion.button>
-          </div>
+          {/* Row 2: Date / Passengers / Vehicle / Search */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 items-end">
 
-          {/* Destination location */}
-          <div className="lg:col-span-3 text-left relative">
-            <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
-              To (Destination)
-            </label>
-            <div className="relative group">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender">
-                <MapPin className="w-4 h-4" />
+            {/* Dates Picker */}
+            <div className="text-left">
+              <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
+                Dates
+              </label>
+              <div className="relative group">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender pointer-events-none">
+                  <Calendar className="w-4 h-4" />
+                </div>
+                <input
+                  type="text"
+                  value={activeTab === 'One Way' ? tripDetails.pickupDate : `${tripDetails.pickupDate} - ${tripDetails.returnDate}`}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (activeTab === 'One Way') {
+                      onTripDetailsChange({ ...tripDetails, pickupDate: val });
+                    } else {
+                      const split = val.split(' - ');
+                      onTripDetailsChange({
+                        ...tripDetails,
+                        pickupDate: split[0] || tripDetails.pickupDate,
+                        returnDate: split[1] || tripDetails.returnDate,
+                      });
+                    }
+                  }}
+                  className="w-full pl-9 pr-2 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm"
+                />
               </div>
-              <select
-                value={tripDetails.destination}
-                onChange={(e) => onTripDetailsChange({ ...tripDetails, destination: e.target.value })}
-                className="w-full pl-9 pr-3 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm group-hover:shadow-md appearance-none"
+            </div>
+
+            {/* Passengers Selector */}
+            <div className="text-left">
+              <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
+                Passengers
+              </label>
+              <div className="relative group">
+                <div className="absolute left-2.5 top-1/2 -translate-y-1/2 text-brand-lavender pointer-events-none">
+                  <Users className="w-3.5 h-3.5" />
+                </div>
+                <input
+                  type="number"
+                  min="1"
+                  max="30"
+                  value={tripDetails.passengers}
+                  onChange={(e) => onTripDetailsChange({ ...tripDetails, passengers: parseInt(e.target.value) || 1 })}
+                  className="w-full pl-8 pr-2 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm text-center"
+                />
+              </div>
+            </div>
+
+            {/* Vehicle preference */}
+            <div className="text-left">
+              <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
+                Vehicle
+              </label>
+              <div className="relative group">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender pointer-events-none">
+                  <Car className="w-4 h-4" />
+                </div>
+                <select
+                  value={tripDetails.vehiclePreference}
+                  onChange={(e) => onTripDetailsChange({ ...tripDetails, vehiclePreference: e.target.value })}
+                  className="w-full pl-9 pr-2 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm appearance-none"
+                >
+                  {vehiclePreferences.map((veh) => (
+                    <option key={veh} value={veh}>{veh}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Search Button - fills last grid cell */}
+            <div className="flex items-end">
+              <motion.button
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onSearch}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-brand-lavender to-indigo-600 text-white rounded-xl font-bold shadow-md shadow-brand-lavender/20 hover:shadow-brand-lavender/30 transition-all cursor-pointer text-xs"
               >
-                {locations.map((loc) => (
-                  <option key={loc} value={loc}>{loc}</option>
-                ))}
-              </select>
+                <Search className="w-4 h-4 shrink-0" />
+                <span>Search</span>
+              </motion.button>
             </div>
           </div>
-
-          {/* Dates Picker */}
-          <div className="lg:col-span-2 text-left relative">
-            <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
-              Dates
-            </label>
-            <div className="relative group">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender">
-                <Calendar className="w-4 h-4" />
-              </div>
-              <input
-                type="text"
-                value={activeTab === 'One Way' ? tripDetails.pickupDate : `${tripDetails.pickupDate} - ${tripDetails.returnDate}`}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  if (activeTab === 'One Way') {
-                    onTripDetailsChange({ ...tripDetails, pickupDate: val });
-                  } else {
-                    const split = val.split(' - ');
-                    onTripDetailsChange({
-                      ...tripDetails,
-                      pickupDate: split[0] || tripDetails.pickupDate,
-                      returnDate: split[1] || tripDetails.returnDate,
-                    });
-                  }
-                }}
-                className="w-full pl-9 pr-3 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm group-hover:shadow-md"
-              />
-            </div>
-          </div>
-
-          {/* Passengers Selector */}
-          <div className="lg:col-span-1 text-left relative">
-            <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
-              Passengers
-            </label>
-            <div className="relative group">
-              <div className="absolute left-2.5 top-1/2 -translate-y-1/2 text-brand-lavender">
-                <Users className="w-3.5 h-3.5" />
-              </div>
-              <input
-                type="number"
-                min="1"
-                max="30"
-                value={tripDetails.passengers}
-                onChange={(e) => onTripDetailsChange({ ...tripDetails, passengers: parseInt(e.target.value) || 1 })}
-                className="w-full pl-8 pr-1 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm group-hover:shadow-md text-center"
-              />
-            </div>
-          </div>
-
-          {/* Vehicle preference */}
-          <div className="lg:col-span-2 text-left relative">
-            <label className="block text-[10px] font-bold text-brand-gray tracking-wider uppercase mb-1 ml-0.5">
-              Vehicle
-            </label>
-            <div className="relative group">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-lavender">
-                <Car className="w-4 h-4" />
-              </div>
-              <select
-                value={tripDetails.vehiclePreference}
-                onChange={(e) => onTripDetailsChange({ ...tripDetails, vehiclePreference: e.target.value })}
-                className="w-full pl-9 pr-3 py-2.5 bg-brand-bg-2 hover:bg-white rounded-xl border border-brand-beige/50 group-hover:border-brand-lavender/40 focus:border-brand-lavender focus:outline-none transition-all text-xs font-bold text-brand-dark shadow-sm group-hover:shadow-md appearance-none"
-              >
-                {vehiclePreferences.map((veh) => (
-                  <option key={veh} value={veh}>{veh}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Circular search button overlapping the right boundary */}
-        <div className="flex justify-center lg:justify-end mt-4">
-          <motion.button
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={onSearch}
-            className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-brand-lavender to-indigo-600 text-white rounded-xl font-bold shadow-md shadow-brand-lavender/20 hover:shadow-brand-lavender/30 transition-all cursor-pointer text-xs"
-          >
-            <Search className="w-4 h-4" />
-            <span>Search Journey</span>
-          </motion.button>
         </div>
 
         {/* Highlight Benefit icons row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 pt-3.5 border-t border-brand-beige/35">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 pt-3.5 border-t border-brand-beige/35">
           <div className="flex items-center gap-1.5 text-[10px] font-semibold text-brand-gray/95">
             <ShieldCheck className="w-3.5 h-3.5 text-brand-lavender shrink-0" />
             <span>Transparent Pricing</span>
@@ -223,7 +228,7 @@ export default function PlannerCard({ tripDetails, onTripDetailsChange, onSearch
           </div>
           <div className="flex items-center gap-1.5 text-[10px] font-semibold text-brand-gray/95">
             <Car className="w-3.5 h-3.5 text-brand-lavender shrink-0" />
-            <span>Clean & Safe Vehicles</span>
+            <span>Safe Vehicles</span>
           </div>
           <div className="flex items-center gap-1.5 text-[10px] font-semibold text-brand-gray/95">
             <HeartHandshake className="w-3.5 h-3.5 text-brand-lavender shrink-0" />

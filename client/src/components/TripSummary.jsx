@@ -1,17 +1,17 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Users, Car, MapPin, MessageCircle, Phone, Mail, Compass, HelpCircle } from 'lucide-react';
+import { Calendar, Users, Car, MapPin, MessageCircle, Phone, Mail, Compass } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function TripSummary({ tripDetails, addedPlaces, totalFare, isMobile, isOpen, onClose }) {
   
   // Create structured pre-filled text for WhatsApp conversion
   const generateWhatsAppLink = () => {
-    const phoneNum = '917000012345'; // target lead number
-    const placesText = addedPlaces.length > 0 
-      ? ` with excursions to: ${addedPlaces.map(p => p.name).join(', ')}` 
+    const phoneNum = '917000012345';
+    const placesText = addedPlaces.length > 0
+      ? ` with excursions to: ${addedPlaces.map(p => p.name).join(', ')}`
       : '';
-    const message = `Hi Travelio! I would like to plan a beautiful journey:\n\n` + 
+    const message = `Hi Travelio! I would like to plan a beautiful journey:\n\n` +
       `• Route: ${tripDetails.pickup} → ${tripDetails.destination}\n` +
       `• Type: ${tripDetails.tripType}\n` +
       `• Date: ${tripDetails.pickupDate}\n` +
@@ -85,7 +85,7 @@ export default function TripSummary({ tripDetails, addedPlaces, totalFare, isMob
               <Car className="w-4 h-4 text-brand-lavender" />
               Vehicle Class
             </span>
-            <span className="max-w-[150px] truncate text-right font-bold text-brand-lavender">
+            <span className="max-w-[140px] truncate text-right font-bold text-brand-lavender">
               {tripDetails.vehiclePreference}
             </span>
           </div>
@@ -112,9 +112,9 @@ export default function TripSummary({ tripDetails, addedPlaces, totalFare, isMob
       {/* Pricing and Action buttons */}
       <div>
         {/* Estimated Fare Gradient Card */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-brand-lavender via-indigo-500 to-indigo-600 rounded-3xl p-5 text-white text-left shadow-lg shadow-indigo-600/10 mb-6">
+        <div className="relative overflow-hidden bg-gradient-to-br from-brand-lavender via-indigo-500 to-indigo-600 rounded-2xl sm:rounded-3xl p-4 sm:p-5 text-white text-left shadow-lg shadow-indigo-600/10 mb-5">
           <span className="text-[10px] font-bold uppercase tracking-widest text-brand-blue block">Estimated Total Fare</span>
-          
+
           <div className="flex items-baseline gap-1 mt-1.5 mb-2">
             <span className="text-2xl font-extrabold">₹ {totalFare.toLocaleString('en-IN')}</span>
             <span className="text-[10px] font-medium opacity-80">({tripDetails.tripType})</span>
@@ -124,15 +124,13 @@ export default function TripSummary({ tripDetails, addedPlaces, totalFare, isMob
             Inclusive of driver allowances, fuel charges & toll taxes.
           </p>
 
-          {/* Layered custom CSS mountains decoration */}
+          {/* Decorative mountains */}
           <div className="absolute right-4 bottom-0 w-28 h-20 pointer-events-none overflow-visible flex items-end">
-            {/* Back Mountain */}
-            <div 
+            <div
               className="w-16 h-16 bg-gradient-to-t from-brand-peach to-brand-lavender/30 opacity-70 transform translate-x-4 translate-y-1 shadow-sm"
               style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
             />
-            {/* Front Mountain */}
-            <div 
+            <div
               className="w-14 h-12 bg-gradient-to-tr from-white to-brand-blue/80 shadow-md relative z-10"
               style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
             />
@@ -201,11 +199,10 @@ export default function TripSummary({ tripDetails, addedPlaces, totalFare, isMob
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-              className="fixed inset-x-0 bottom-0 z-50 rounded-t-[32px] glass p-6 shadow-2xl border-t border-white/60 max-h-[85vh] overflow-y-auto"
+              className="fixed inset-x-0 bottom-0 z-50 rounded-t-[28px] glass p-5 shadow-2xl border-t border-white/60 max-h-[88vh] overflow-y-auto"
             >
               {/* Drag Handle */}
-              <div className="w-12 h-1.5 bg-brand-beige rounded-full mx-auto mb-6 cursor-pointer" onClick={onClose} />
-              
+              <div className="w-12 h-1.5 bg-brand-beige rounded-full mx-auto mb-5 cursor-pointer" onClick={onClose} />
               <PanelContent />
             </motion.div>
           </>
@@ -216,7 +213,7 @@ export default function TripSummary({ tripDetails, addedPlaces, totalFare, isMob
 
   // Desktop Floating Panel (Sticky on right hand side)
   return (
-    <div className="sticky top-28 glass rounded-[32px] p-6 shadow-premium border border-white/65 h-[fit-content] min-w-[340px] max-w-[360px] self-start">
+    <div className="sticky top-28 glass rounded-[28px] p-5 shadow-premium border border-white/65 h-fit self-start w-full">
       <PanelContent />
     </div>
   );

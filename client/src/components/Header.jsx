@@ -20,14 +20,14 @@ export default function Header() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-[1300px] px-6 py-3 flex items-center justify-between glass rounded-[24px] border border-white/30 shadow-lg shadow-brand-lavender/5"
+        className="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-1.5rem)] sm:w-[92%] max-w-[1300px] px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between glass rounded-[18px] sm:rounded-[24px] border border-white/30 shadow-lg shadow-brand-lavender/5"
       >
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-lavender to-brand-blue flex items-center justify-center shadow-md shadow-brand-lavender/25 group-hover:scale-105 transition-transform duration-300">
-            <Compass className="w-5 h-5 text-white animate-spin-slow" style={{ animationDuration: '20s' }} />
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-brand-lavender to-brand-blue flex items-center justify-center shadow-md shadow-brand-lavender/25 group-hover:scale-105 transition-transform duration-300">
+            <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-spin-slow" style={{ animationDuration: '20s' }} />
           </div>
-          <span className="text-xl font-bold tracking-tight text-brand-dark">
+          <span className="text-base sm:text-xl font-bold tracking-tight text-brand-dark">
             TRAVEL<span className="text-brand-lavender font-extrabold">IO</span>
           </span>
         </a>
@@ -64,11 +64,11 @@ export default function Header() {
             whileHover={{ scale: 1.03, y: -1 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setIsOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-brand-dark text-white rounded-full text-sm font-medium shadow-md shadow-brand-dark/15 hover:shadow-brand-dark/30 transition-all duration-300 pointer-events-auto"
+            className="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 bg-brand-dark text-white rounded-full text-xs sm:text-sm font-medium shadow-md shadow-brand-dark/15 hover:shadow-brand-dark/30 transition-all duration-300 pointer-events-auto"
           >
             <span>Menu</span>
             <div className="w-4 h-4 flex items-center justify-center">
-              <Grid className="w-4 h-4 text-white/90" />
+              <Grid className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/90" />
             </div>
           </motion.button>
         </div>

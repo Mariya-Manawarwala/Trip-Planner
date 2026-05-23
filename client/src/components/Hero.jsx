@@ -4,7 +4,7 @@ import { Sparkles, ArrowRight, Star } from 'lucide-react';
 
 export default function Hero({ onStartPlanning, onExploreVehicles }) {
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center justify-start rounded-b-[60px] md:rounded-b-[100px] lg:rounded-b-[160px] overflow-hidden shadow-2xl z-10">
+    <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] flex items-center justify-start rounded-b-[40px] sm:rounded-b-[60px] md:rounded-b-[100px] lg:rounded-b-[160px] overflow-hidden shadow-2xl z-10">
       
       {/* 1. Full Screen Vibrant Mumbai Sea Link Image Background */}
       <div className="absolute inset-0 w-full h-full z-0">
@@ -93,7 +93,7 @@ export default function Hero({ onStartPlanning, onExploreVehicles }) {
               transition: { staggerChildren: 0.15 }
             }
           }}
-          className="text-left max-w-2xl pt-32 pb-24 lg:pt-40 lg:pb-32"
+          className="text-left max-w-2xl pt-24 pb-20 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32"
         >
           {/* Floating badge top */}
           <motion.div
@@ -113,11 +113,11 @@ export default function Hero({ onStartPlanning, onExploreVehicles }) {
               hidden: { opacity: 0, y: 25 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
             }}
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-white mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-white mb-6"
           >
             Plan. Explore.<br />
             Travel with{' '}
-            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#A78BFA] via-[#F472B6] to-[#FCD34D] font-handwritten text-7xl md:text-8xl px-2 rotate-[-1deg] drop-shadow-lg">
+            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#A78BFA] via-[#F472B6] to-[#FCD34D] font-handwritten text-5xl sm:text-6xl md:text-7xl lg:text-8xl px-2 rotate-[-1deg] drop-shadow-lg">
               ease
               {/* Double handwritten underline brush */}
               <svg 

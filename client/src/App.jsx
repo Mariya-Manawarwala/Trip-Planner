@@ -6,7 +6,7 @@ import VehicleSelection from './components/VehicleSelection';
 import NearbyPlaces from './components/NearbyPlaces';
 import TripSummary from './components/TripSummary';
 import Footer from './components/Footer';
-import { Calendar, Users, Compass, ShieldAlert, Sparkles } from 'lucide-react';
+import { ShieldAlert, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 function App() {
@@ -44,7 +44,6 @@ function App() {
 
   // Update base fare automatically if passenger preferences suggest different sizes
   useEffect(() => {
-    // If the preference dropdown changes, match the list selection automatically
     if (tripDetails.vehiclePreference !== 'Any Vehicle') {
       if (tripDetails.vehiclePreference === 'Toyota Innova Crysta') {
         setSelectedVehicle('Toyota Innova Crysta');
@@ -70,7 +69,6 @@ function App() {
       if (exists) {
         return prev.filter((p) => p.id !== place.id);
       } else {
-        // Trigger subtle celebration on adding a spot!
         confetti({
           particleCount: 20,
           spread: 40,
@@ -90,7 +88,6 @@ function App() {
       ...prev,
       vehiclePreference: carId
     }));
-    // Trigger slide to top summary on small screens
     if (isMobile) {
       setMobileSummaryOpen(true);
     }
@@ -111,88 +108,91 @@ function App() {
       origin: { y: 0.65 },
       colors: ['#A78BFA', '#7DD3FC', '#FFD8BE']
     });
-    // Scroll to vehicles selection
     scrollToSection('vehicles');
   };
 
   return (
-    <div className="relative min-h-screen bg-brand-bg-1 text-brand-dark flex flex-col justify-between selection:bg-brand-lavender/35">
+    <div className="relative min-h-screen bg-[#EEF2F8] text-brand-dark flex flex-col selection:bg-brand-lavender/35" style={{ overflowX: 'hidden' }}>
       {/* Visual background ambient layers */}
-      <div className="absolute top-[8%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-brand-lavender/5 blur-[120px] pointer-events-none" />
-      <div className="absolute top-[45%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-brand-blue/5 blur-[100px] pointer-events-none" />
+      <div className="fixed top-[8%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-brand-lavender/5 blur-[120px] pointer-events-none z-0" />
+      <div className="fixed top-[45%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-brand-blue/5 blur-[100px] pointer-events-none z-0" />
 
       {/* Navigation Header */}
       <Header />
 
       {/* Hero Section */}
-      <Hero 
+      <Hero
         onStartPlanning={() => scrollToSection('planner')}
         onExploreVehicles={() => scrollToSection('vehicles')}
       />
 
       {/* Main Glass Floating Planner */}
-      <PlannerCard 
+      <PlannerCard
         tripDetails={tripDetails}
         onTripDetailsChange={setTripDetails}
         onSearch={handleSearch}
       />
 
-      {/* Smart UX Recommendation banner (Alerts when passenger limits are crossed) */}
+      {/* Smart UX Recommendation banner */}
       {tripDetails.passengers > 4 && selectedVehicle === 'Maruti Dzire' && (
-        <div className="max-w-6xl mx-auto px-4 md:px-0 mb-8 w-full">
-          <div className="flex items-center gap-3 px-6 py-4 bg-orange-50 border border-orange-200 text-orange-800 rounded-2xl text-xs font-semibold shadow-sm text-left">
-            <ShieldAlert className="w-5 h-5 text-orange-600 shrink-0" />
+        <div className="w-full max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-12 mb-6">
+          <div className="flex items-start gap-3 px-4 py-3.5 bg-orange-50 border border-orange-200 text-orange-800 rounded-2xl text-xs font-semibold shadow-sm">
+            <ShieldAlert className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold">Smart Suggestion:</span> You have selected <span className="font-bold">5 passengers</span>, but your current car choice (<span className="font-bold">Maruti Dzire</span>) seats up to 4. We recommend choosing the <span className="font-bold text-brand-lavender">Toyota Innova Crysta</span> or <span className="font-bold text-brand-lavender">Tempo Traveller</span> for maximum comfort!
+              <span className="font-bold">Smart Suggestion: </span>
+              You have selected <span className="font-bold">{tripDetails.passengers} passengers</span>, but your current choice (<span className="font-bold">Maruti Dzire</span>) seats up to 4. We recommend the{' '}
+              <span className="font-bold text-brand-lavender">Toyota Innova Crysta</span> or{' '}
+              <span className="font-bold text-brand-lavender">Tempo Traveller</span>.
             </div>
           </div>
         </div>
       )}
 
       {/* Two Column Layout Block: Content & Sticky Summary */}
-      <main className="max-w-[1300px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10 w-full mb-28 lg:mb-16">
-        
-        {/* Left Side Content Column (8 columns) */}
-        <div className="lg:col-span-8 w-full flex flex-col gap-6">
-          {/* Vehicle Selection list */}
-          <VehicleSelection 
-            selectedVehicle={selectedVehicle}
-            onSelectVehicle={handleSelectVehicle}
-          />
+      <main className="relative z-10 w-full max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-12 mb-28 lg:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
-          {/* Scenic Nearby Places */}
-          <NearbyPlaces 
-            addedPlaces={addedPlaces}
-            onTogglePlace={handleTogglePlace}
-          />
-        </div>
-
-        {/* Right Side Column (Itinerary sticky panel on desktop - 4 columns) */}
-        <div className="lg:col-span-4 w-full">
-          {!isMobile && (
-            <TripSummary 
-              tripDetails={tripDetails}
-              addedPlaces={addedPlaces}
-              totalFare={totalFare}
-              isMobile={false}
+          {/* Left Side Content Column */}
+          <div className="lg:col-span-8 w-full flex flex-col gap-4 min-w-0">
+            {/* Vehicle Selection list */}
+            <VehicleSelection
+              selectedVehicle={selectedVehicle}
+              onSelectVehicle={handleSelectVehicle}
             />
+
+            {/* Scenic Nearby Places */}
+            <NearbyPlaces
+              addedPlaces={addedPlaces}
+              onTogglePlace={handleTogglePlace}
+            />
+          </div>
+
+          {/* Right Side Column (Itinerary sticky panel on desktop) */}
+          {!isMobile && (
+            <div className="lg:col-span-4 w-full min-w-0">
+              <TripSummary
+                tripDetails={tripDetails}
+                addedPlaces={addedPlaces}
+                totalFare={totalFare}
+                isMobile={false}
+              />
+            </div>
           )}
         </div>
       </main>
 
-
       {/* Mobile Floating Bottom Bar Trigger */}
       {isMobile && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-md">
-          <div className="glass rounded-[24px] p-4 flex items-center justify-between shadow-2xl border border-white/80 backdrop-blur-xl">
-            <div className="text-left pl-2">
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm">
+          <div className="glass rounded-[20px] p-3.5 flex items-center justify-between shadow-2xl border border-white/80 backdrop-blur-xl">
+            <div className="text-left pl-1.5">
               <span className="text-[10px] font-bold text-brand-gray uppercase tracking-widest block">Est. Fare</span>
               <span className="text-lg font-extrabold text-brand-dark">₹ {totalFare.toLocaleString('en-IN')}</span>
             </div>
-            
+
             <button
               onClick={() => setMobileSummaryOpen(true)}
-              className="px-6 py-3 bg-brand-dark text-white rounded-xl text-xs font-bold shadow-md shadow-brand-dark/15 hover:shadow-brand-dark/30 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-5 py-2.5 bg-brand-dark text-white rounded-xl text-xs font-bold shadow-md shadow-brand-dark/15 hover:shadow-brand-dark/30 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-brand-blue" />
               <span>Review Itinerary</span>
@@ -203,7 +203,7 @@ function App() {
 
       {/* Mobile Bottom Sheet Modal */}
       {isMobile && (
-        <TripSummary 
+        <TripSummary
           tripDetails={tripDetails}
           addedPlaces={addedPlaces}
           totalFare={totalFare}

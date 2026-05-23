@@ -31,7 +31,7 @@ export default function Footer() {
 
 
   return (
-    <footer className="relative w-full bg-brand-bg-3 border-t border-brand-beige/50 rounded-t-[40px] md:rounded-t-[60px] overflow-hidden pt-16 pb-8 px-6 md:px-12">
+    <footer className="relative w-full border-t border-brand-beige/50 rounded-t-[40px] md:rounded-t-[60px] overflow-hidden pt-16 pb-8 px-6 md:px-12" style={{ backgroundColor: '#D1DBE4' }}>
       {/* Background soft blurs */}
       <div className="absolute top-1/2 left-10 w-72 h-72 rounded-full bg-brand-peach/10 blur-[90px] pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-80 h-80 rounded-full bg-brand-lavender/10 blur-[100px] pointer-events-none" />
