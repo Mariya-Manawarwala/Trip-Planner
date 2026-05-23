@@ -150,7 +150,7 @@ function App() {
       )}
 
       {/* Two Column Layout Block: Content & Sticky Summary */}
-      <main className="max-w-[1300px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10 w-full mb-16">
+      <main className="max-w-[1300px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10 w-full mb-28 lg:mb-16">
         
         {/* Left Side Content Column (8 columns) */}
         <div className="lg:col-span-8 w-full flex flex-col gap-6">

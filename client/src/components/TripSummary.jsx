@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Users, Car, MapPin, MessageCircle, Phone, Mail, Compass, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 

@@ -54,15 +54,18 @@ export default function VehicleSelection({ selectedVehicle, onSelectVehicle }) {
         </p>
       </div>
 
-      {/* Grid Layout - 3 Cards side by side */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      {/* Responsive Layout - Swipeable Carousel on Mobile, 3-Column Grid on Desktop */}
+      <div 
+        className="flex sm:grid gap-5 overflow-x-auto sm:overflow-x-visible pb-4 sm:pb-0 scrollbar-none snap-x snap-mandatory sm:grid-cols-3 select-none"
+        style={{ scrollbarWidth: 'none' }}
+      >
         {vehicles.map((car) => {
           const isSelected = selectedVehicle === car.id;
           return (
             <motion.div
               key={car.id}
               whileHover={{ y: -4 }}
-              className={`rounded-[24px] p-5 glass shadow-premium border-2 transition-all duration-300 shine-sweep flex flex-col justify-between ${
+              className={`snap-center shrink-0 w-[85%] sm:w-auto rounded-[24px] p-5 glass shadow-premium border-2 transition-all duration-300 shine-sweep flex flex-col justify-between ${
                 isSelected ? 'border-brand-lavender bg-brand-bg-2/80 shadow-brand-lavender/5' : 'border-white/60'
               }`}
             >
